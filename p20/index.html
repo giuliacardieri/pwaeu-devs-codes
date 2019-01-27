@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Parei Onde?</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#5f3096" />
+
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/icons/icon.png">
+  <link rel="icon" type="image/png" href="/assets/icons/icon.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/assets/icons/icon.png" sizes="16x16">
+  <link rel="manifest" href="./manifest.json">
+
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+
+  <link rel="stylesheet" type="text/css" href="css/libraries/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/libraries/all.min.css">
+  <link rel="stylesheet" type="text/css" href="css/modulos/variaveis.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/elementos/header.css">
+  <link rel="stylesheet" type="text/css" href="css/elementos/buttons.css">
+  <link rel="stylesheet" type="text/css" href="css/elementos/main.css">
+  <link rel="stylesheet" type="text/css" href="css/elementos/add-form.css">
+  <link rel="stylesheet" type="text/css" href="css/elementos/accordion.css">
+  <link rel="stylesheet" type="text/css" href="css/elementos/details.css">
+  <link rel="stylesheet" type="text/css" href="css/elementos/footer.css">
+
+  <script id="cards" type="text/x-handlebars-template"> 
+    {{#each this}}
+    <div class="card card--serie col-md-4" id="{{ id }}">
+      <div class="card-body">
+        <h5 class="card-title">{{ nome }}</h5>
+        {{#if temporada}}
+          <p class="card-text temporada"><i class="card-icon fas fa-tv"></i>Temporada {{ temporada }}</p>
+        {{/if}}
+        {{#if episodio}}
+        <p class="card-text"><i class="card-icon fas fa-tv"></i>Episódio {{ episodio }}</p>
+        {{/if}}
+        {{#if motivacao}}
+        <p class="card-text"><i class="card-icon far fa-laugh"></i>{{ motivacao }}/10</p>
+        {{/if}}
+        {{#if favorita}}
+        <p class="card-text"><i class="card-icon far fa-heart"></i>Favorita</p>
+        {{/if}}
+      </div>
+    </div>
+    {{/each}}
+  </script>
+
+  <script id="form" type="text/x-handlebars-template">
+    <div class="form-group">
+      <label for="nome">Nome</label>
+      <input type="text" name="nome" class="form-control" id="nome" placeholder="Nome">
+    </div>
+    <div class="form-group">
+          <label for="temporada">Temporada</label>
+          <input type="number" name="temporada" class="form-control" id="temporada" placeholder="Temporada">
+    </div>
+    <div class="form-group">
+        <label for="episodio">Episódio</label>
+        <input type="number" name="episodio" class="form-control" id="episodio" placeholder="Episódio">
+    </div>
+    <div class="form-group">
+      <label for="data">Assistida por último em</label>
+      <input type="date" name="data" class="form-control" id="data" placeholder="Assistida por último em" ariadescribedby="dataHelp">
+      <small id="dataHelp" class="form-text text-muted">Data em que a série foi assistida pela última vez</small>
+    </div>
+    <div class="form-group">
+      <label for="motivacao">Como você assiste?</label>
+      <select name="tipo" class="form-control" id="tipo" ariadescribedby="tipoHelp">
+        <option value="">Selecione uma opção</option>
+        <option value="Amazon Prime">Amazon Prime</option>
+        <option value="Baixada">Baixada</option>
+        <option value="HBOgo">HBOgo</option>
+        <option value="Hulu">Hulu</option>
+        <option value="Netflix">Netflix</option>
+        <option value="Now">Now</option>
+        <option value="Online">Online</option>
+        <option value="TV">TV</option>
+        <option value="YouTube">YouTube</option>
+      </select>
+      <small id="tipoHelp" class="form-text text-muted">Plataforma que você costuma assistir a série</small>
+    </div>
+    <div class="form-group">
+      <label for="motivacao">Motivação para continuar assistindo</label>
+      <input type="number" name="motivacao" class="form-control" id="motivacao" placeholder="Motivação para continuar assistindo" ariadescribedby="motivacaoHelp">
+      <small id="motivacaoHelp" class="form-text text-muted">Valor entre 0-10 que indica o quanto você quer continuar assistindo essa série</small>
+    </div>
+    <div class="form-group">
+      <label for="comentario">Por que você parou de assistir?</label>
+      <input type="text" name="comentario" class="form-control" id="comentario" placeholder="Por que você parou de assistir?" ariadescribedby="comentarioHelp">
+      <small id="comentarioHelp" class="form-text text-muted">Comentário sobre o motivo de você parar de assistir a série</small>
+    </div>
+    <div class="form-group form-check">
+      <input type="checkbox" name="favorita" class="form-check-input" id="favorita">
+      <label class="form-check-label" for="favorita">Marcar como favorita</label>
+    </div>
+  </script>
+
+  <script id="details-template" type="text/x-handlebars-template"> 
+    <h2 class="details__h2">{{ nome }}</h2>
+    {{#if temporada}}
+    <p class="details__p"><i class="details__icon fas fa-tv"></i>Temporada {{ temporada}}</p>
+    {{/if}}
+    {{#if episodio}}
+    <p class="details__p"><i class="details__icon fas fa-tv"></i>Episódio {{ episodio }}</p>
+    {{/if}}
+    {{#if data}}
+    <p class="details__p"><i class="details__icon far fa-calendar-alt"></i>Assistida por último em {{ data }}</p>
+    {{/if}}
+    {{#if tipo}}
+    <p class="details__p"><i class="details__icon fas fa-video"></i>{{ tipo }}</p>
+    {{/if}}
+    {{#if motivacao}}
+    <p class="details__p"><i class="details__icon far fa-laugh"></i>Motivação: {{ motivacao }}/10</p>
+    {{/if}}
+    {{#if comentario}}
+    <p class="details__p"><i class="details__icon far fa-comment"></i>{{ comentario }}</p>
+    {{/if}}
+    {{#if favorita}}
+    <p class="details__p"><i class="details__icon fas fa-heart"></i>Série favorita</p>
+    <button class="btn btn-primary btn-remove-fav" data-id="{{ id }}">Remover das favoritas</button>
+    {{else}}
+    <button class="btn btn-primary btn-fav" data-id="{{ id }}">Marcar como favorita</button>
+    {{/if}}
+    <button class="btn btn-primary btn-editar" hidden>Editar</button>
+  </script>
+    
+  <script id="meudesign-lista" type="text/x-handlebars-template"> 
+    {{#each this}}
+    <div class="card card--serie col-md-4" id="{{ id }}">
+      <div class="card-body">
+        <h5 class="card-title">{{ plataforma }}</h5>
+        {{#if id}}
+          <p class="card-text temporada"><i class="card-icon fas fa-tv"></i>Nome {{ id }}</p>
+        {{/if}}
+        {{#if ativo}}
+        <p class="card-text"><i class="card-icon fas fa-tv"></i>Ativo {{ ativo }}</p>
+        {{/if}}
+      </div>
+    </div>
+    {{/each}}
+  </script>
+
+</head>
+
+<body>
+<div class="container-fluid">
+  <div class="row">
+    <header class="header col-md">
+      <h1 class="header__h1">PAREI ONDE?</h1>
+    </header>
+  </div>
+
+  <main class="main">
+    <div class="row">
+      <section class="main__wrapper main__empty-wrapper col-md">
+        <i class="main__icon far fa-frown"></i>
+        <p class="main__p">Opa! Você ainda não adicionou séries.</p>
+      </section>
+      <section class="main__wrapper main__empty-favorite-wrapper col-md" hidden>
+        <i class="main__icon far fa-frown"></i>
+        <p class="main__p">Opa! Você ainda não marcou séries como favoritas</p>
+      </section>
+      <section class="main__wrapper main__home-wrapper col-md" hidden></section>
+      <section class="main__wrapper main__favoritos-wrapper col-md" hidden></section>
+      <section class="main__wrapper main__meudesign-wrapper col-md" hidden></section>
+    </div>
+  </main>
+
+  <button class="btn btn-primary btn-rounded btn-add"><i class="btn-icon fas fa-plus"></i></button>
+
+  <div class="row">
+    <section class="window window__details window--hidden col-md" hidden>
+      <div class="row">
+        <header class="window__header col-md">
+          <h1 class="window__h1"><i class="window__icon window__icon--details fas fa-chevron-left"></i>Detalhes da Série</h1>
+        </header>
+      </div>
+      <div class="row">
+        <section class="details col-md"></section>
+      </div>
+    </section>
+  </div>
+
+  <div class="row">
+    <section class="window window__add-form window--hidden col-md" hidden>
+      <div class="row">
+        <header class="window__header col-md">
+          <h1 class="window__h1"><i class="window__icon window__icon--add-form fas fa-chevron-left"></i>Adicionar nova série</h1>
+        </header>
+      </div>
+      <div class="row">
+        <form class="add-form__form col-md">
+          <section class="form__wrapper"></section>
+          <button type="submit" class="btn btn-primary btn-save">Salvar</button>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="row">
+    <nav class="nav-elem col-md">
+      <ul class="nav__ul nav nav-pills nav-justified">
+        <li class="nav__li nav-item">
+          <a class="nav__a nav-link active" href="#home" id="home">
+            <i class="nav__nav-icon fas fa-home"></i>
+            <span class="nav__nav-text">Home</span>
+          </a>
+        </li>
+        <li class="nav__li nav-item">
+          <a class="nav__a nav-link" href="#favoritos" id="favoritos">
+            <i class="nav__nav-icon fas fa-star"></i>
+            <span class="nav__nav-text">Favoritos</span>
+          </a>
+        </li>
+        <li class="nav__li nav-item">
+          <a class="nav__a nav-link" href="#meudesign" id="meudesign">
+            <i class="nav__nav-icon fas fa-palette"></i>
+            <span class="nav__nav-text">Meu Design</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+</div>
+
+</body>
+
+<script src="js/libraries/jquery.min.js"></script>
+<script src="js/libraries/popper.min.js"></script>
+<script src="js/libraries/bootstrap.min.js"></script>
+<script src="js/libraries/handlebars.js"></script>
+
+<script src="js/pwa-eu/gerenciamento.js"></script>
+<script src="js/pwa-eu/conexao.js"></script>
+
+<script src="js/db.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/window.js"></script>
+<script src="js/form.js"></script>
+<script src="js/details.js"></script>
+
+<script type="text/javascript">
+    if('serviceWorker' in navigator) {
+        navigator.serviceWorker
+            .register( window.location.href + 'service-worker.js')
+            .then(function() { 
+                console.log("Service Worker Registered"); 
+        });
+    }
+</script>
+
+</html>

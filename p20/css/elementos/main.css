@@ -1,0 +1,18 @@
+.main {
+	padding: 2.5vh 0;
+}
+
+.main__empty-wrapper,
+.main__empty-favorite-wrapper {
+	text-align: center;
+}
+
+.main__icon {
+	color: var(--aux-font);
+	font-size: 50px;
+}
+
+.main__p {
+	color: var(--aux-font);
+	margin: 10px 0;
+}
